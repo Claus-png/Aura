@@ -1,8 +1,10 @@
 package com.teddybear.aura.ui.screens
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.*import androidx.compose.foundation.*
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -50,7 +52,7 @@ fun PlayerScreen(vm: MainViewModel, onClose: () -> Unit) {
         targetState = showEq,
         transitionSpec = {
             (slideInVertically { it } + fadeIn(tween(300))) togetherWith
-            (slideOutVertically { -it } + fadeOut(tween(200)))
+                    (slideOutVertically { -it } + fadeOut(tween(200)))
         },
         label = "player_eq_switch",
     ) { eq ->
@@ -212,7 +214,7 @@ private fun PlayerContent(
             targetState = track.id,
             transitionSpec = {
                 (scaleIn(tween(300)) + fadeIn(tween(300))) togetherWith
-                (scaleOut(tween(200)) + fadeOut(tween(200)))
+                        (scaleOut(tween(200)) + fadeOut(tween(200)))
             },
             label = "cover_anim",
         ) { _ ->
@@ -511,7 +513,7 @@ private fun RatingStars(
     onSetRating: (Float) -> Unit,
 ) {
     var lastClickedStar by remember { mutableStateOf(0) }
-    
+
     Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
         (1..5).forEach { value ->
             val filled = rating >= value
@@ -520,7 +522,7 @@ private fun RatingStars(
                 animationSpec = spring(stiffness = Spring.StiffnessMedium),
                 label = "starScale",
             )
-            
+
             Icon(
                 if (filled) Icons.Rounded.Star else Icons.Rounded.StarBorder,
                 contentDescription = null,
@@ -546,7 +548,7 @@ private fun SeekBar(posMs: Long, durMs: Long, onSeek: (Long) -> Unit) {
     var dragFrac by remember { mutableStateOf(0f) }
 
     val progress = if (dragging) dragFrac
-                   else if (durMs > 0) (posMs.toFloat() / durMs) else 0f
+    else if (durMs > 0) (posMs.toFloat() / durMs) else 0f
 
     Column(modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp)) {
         Slider(
